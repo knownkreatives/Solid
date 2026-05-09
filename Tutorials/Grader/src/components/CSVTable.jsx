@@ -1,20 +1,21 @@
-import { createSignal } from 'solid-js';
 import { parseCSV } from '../utils/Parser';
 
 export default function CSVTable(props) {
-  const { headers, rows } = parseCSV(props.csv, props.height || 1);
+  if (!props.data) return <div>Loading CSV...</div>;
+
+  const { headers, rows } = parseCSV(props.data);
 
   return (
-    <table>
+    <table class="table-auto border-collapse border border-gray-300 w-full mt-4">
       <thead>
         <tr>
-          {headers.map(h => <th>{h}</th>)}
+          {headers.map(h => <th class="border border-gray-300 px-4 py-2">{h}</th>)}
         </tr>
       </thead>
       <tbody>
         {rows.map(row => (
           <tr>
-            {row.map(cell => <td>{cell}</td>)}
+            {row.map(cell => <td class="border border-gray-300 px-4 py-2">{cell}</td>)}
           </tr>
         ))}
       </tbody>
